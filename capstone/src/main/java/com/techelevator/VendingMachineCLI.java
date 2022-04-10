@@ -22,11 +22,14 @@ public class VendingMachineCLI extends Import {
 	}
 
 	public void run() {
+		stockVendingMachine();
+		populateVendingStocked();
+
 		while (true) {
 			String choice = (String) menu.getChoiceFromOptions(MAIN_MENU_OPTIONS);
 
 			if (choice.equals(MAIN_MENU_OPTION_DISPLAY_ITEMS)) {
-				Map<String, List<String>> vendingItems = stockVendingMachine();
+				Map<String, List<String>> vendingItems = getVendingCategories();
 				for(Map.Entry<String, List<String>> item:vendingItems.entrySet()){
 					System.out.println(item.getKey() + ": " + item.getValue().get(0) + " " + item.getValue().get(1));
 				}
@@ -35,7 +38,7 @@ public class VendingMachineCLI extends Import {
 				purchase.purchaseMenu();
 			}
 			else if(choice.equals(MAIN_MENU_OPTION_EXIT)) {
-				//do exit
+				break;
 			}
 		}
 	}

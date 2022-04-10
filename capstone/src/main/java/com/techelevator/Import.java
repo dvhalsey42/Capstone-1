@@ -9,13 +9,35 @@ import java.util.HashMap;
 
 public class Import {
 
-    String filePath = "C:\\Users\\dvhal\\Desktop\\meritamerica\\repos\\module-1-capstone\\capstone\\vendingmachine.csv";
+    private String filePath = "capstone/vendingmachine.csv";
 
-    File inputFile = new File(filePath);
-    Map<String, List<String>> vendingCategories = new HashMap<>();
+    private File inputFile = new File(filePath);
 
+    private Map<String, List<String>> vendingCategories = new HashMap<>();
 
-    public Map<String, List<String>> stockVendingMachine() {
+    private Map<String, List<String>> vendingStocked = new HashMap<>();
+
+    public Map<String, List<String>> getVendingStocked() {
+        return vendingStocked;
+    }
+
+    public void setVendingStocked(Map<String, List<String>> vendingStocked) {
+        this.vendingStocked = vendingStocked;
+    }
+
+    public Map<String, List<String>> getVendingCategories() {
+        return vendingCategories;
+    }
+
+    public void setVendingCategories(Map<String, List<String>> vendingCategories) {
+        this.vendingCategories = vendingCategories;
+    }
+
+    public void populateVendingStocked(){
+        vendingStocked = vendingCategories;
+    }
+
+    public void stockVendingMachine() {
         try (Scanner fileInput = new Scanner(inputFile)) {
             while (fileInput.hasNextLine()) {
 
@@ -23,21 +45,19 @@ public class Import {
 
                 String[] inputItems = lineOfText.split("\\|");
 
-
                 List<String> vendingItems = new ArrayList<>();
-
 
             for (int i = 1; i < 4; i++) {
                     vendingItems.add(inputItems[i]);
                 }
 
                 vendingCategories.put(inputItems[0], vendingItems);
-
             }
         } catch (FileNotFoundException e) {
             System.out.println("File not found" + e.getMessage());
         }
 
-        return vendingCategories;
     }
+
+
 }
