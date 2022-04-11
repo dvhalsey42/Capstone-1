@@ -7,6 +7,8 @@ import java.util.Scanner;
 public class Purchase extends Import{
     private double totalMoney;
 
+    private Log log = new Log();
+
     public double getTotalMoney() {return totalMoney;}
     public void setTotalMoney(double totalMoney) {
         this.totalMoney = totalMoney;
@@ -15,9 +17,8 @@ public class Purchase extends Import{
         setTotalMoney(getTotalMoney() + amountToAdd);
     }
 
-    public void purchaseMenu() {
-        stockVendingMachine();
-        populateVendingStocked();
+    public void purchaseMenu(Map<String, List<String>> vendingCategories) {
+
 
         while (true) {
             System.out.println("(1) Feed Money");
@@ -31,20 +32,26 @@ public class Purchase extends Import{
 
             if (inputString.equals("1")) {
                 System.out.println("Please enter dollar value of bill to feed into vending machine");
-                addMoney(Double.valueOf(input.nextLine()));
+                String inputString2 = input.nextLine();
+                addMoney(Double.valueOf(inputString2));
+                log.logMessage(inputString2 + " " + String.valueOf(totalMoney));
 
             } else if (inputString.equals("2")) {
 
-                Map<String, List<String>> vendingItems = getVendingStocked();
-                for(Map.Entry<String, List<String>> item:vendingItems.entrySet()){
-                    System.out.println(item.getKey() + ": " + item.getValue().get(0) +
-                            " " + item.getValue().get(1));
+                for(Map.Entry<String, List<String>> item:vendingCategories.entrySet()){
+                    if(item.getKey().contains("*")){
+                        System.out.println("SOLD OUT: " + item.getValue().get(0));
+                    }
+                    else {
+                        System.out.println(item.getKey() + ": " + item.getValue().get(0) +
+                                " " + item.getValue().get(1));
+                    }
                 }
 
                 System.out.println("Please select your item");
 
                 String selection = input.nextLine();
-                for (Map.Entry<String, List<String>> product : vendingItems.entrySet()) {
+                for (Map.Entry<String, List<String>> product : vendingCategories.entrySet()) {
                     if (selection.equals(product.getKey()) && selection.contains("A")) {
 
                         Chip buyChip = new Chip(totalMoney);
@@ -75,7 +82,16 @@ public class Purchase extends Import{
                     }
 
 
+
                 }
+
+                log.logMessage(vendingCategories.get(selection).get(0) + " " + selection + " " +
+                        String.valueOf(Double.parseDouble(vendingCategories.get(selection).get(1)) + totalMoney) +
+                        " " + String.valueOf(totalMoney));
+
+                vendingCategories.put("*" + selection, vendingCategories.get(selection));
+                vendingCategories.remove(selection);
+
             }
 
             else if (inputString.equals("3")) {
@@ -86,7 +102,7 @@ public class Purchase extends Import{
                 totalMoney -= dimes * .10;
 
                 int nickles = (int)(totalMoney / .05);
-                totalMoney -= nickles * .05;
+                totalMoney = 0.0;
 
                 System.out.println("Dispensing " + quarters + " Quarters");
                 System.out.println("Dispensing " + dimes + " Dimes");

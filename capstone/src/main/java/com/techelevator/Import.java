@@ -15,26 +15,12 @@ public class Import {
 
     private Map<String, List<String>> vendingCategories = new HashMap<>();
 
-    private Map<String, List<String>> vendingStocked = new HashMap<>();
-
-    public Map<String, List<String>> getVendingStocked() {
-        return vendingStocked;
-    }
-
-    public void setVendingStocked(Map<String, List<String>> vendingStocked) {
-        this.vendingStocked = vendingStocked;
-    }
-
     public Map<String, List<String>> getVendingCategories() {
         return vendingCategories;
     }
 
     public void setVendingCategories(Map<String, List<String>> vendingCategories) {
         this.vendingCategories = vendingCategories;
-    }
-
-    public void populateVendingStocked(){
-        vendingStocked = vendingCategories;
     }
 
     public void stockVendingMachine() {
