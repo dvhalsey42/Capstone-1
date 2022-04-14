@@ -17,7 +17,7 @@ public class Purchase extends Import{
         setTotalMoney(getTotalMoney() + amountToAdd);
     }
 
-    public void purchaseMenu(Map<String, List<String>> vendingCategories) {
+    public void purchaseMenu(Map<String, List<String>> vendingCategories, Map<String, Integer> vendingStock) {
 
 
         while (true) {
@@ -33,10 +33,13 @@ public class Purchase extends Import{
             if (inputString.equals("1")) {
                 System.out.println("Please enter dollar value of bill to feed into vending machine");
                 String inputString2 = input.nextLine();
+
                 addMoney(Double.valueOf(inputString2));
                 log.logMessage(inputString2 + " " + String.valueOf(totalMoney));
 
             } else if (inputString.equals("2")) {
+
+
 
                 for(Map.Entry<String, List<String>> item:vendingCategories.entrySet()){
                     if(item.getKey().contains("*")){
@@ -80,38 +83,50 @@ public class Purchase extends Import{
                                 Double.parseDouble(product.getValue().get(1)));
 
                     }
-
-
-
                 }
 
                 log.logMessage(vendingCategories.get(selection).get(0) + " " + selection + " " +
                         String.valueOf(Double.parseDouble(vendingCategories.get(selection).get(1)) + totalMoney) +
                         " " + String.valueOf(totalMoney));
 
-                vendingCategories.put("*" + selection, vendingCategories.get(selection));
-                vendingCategories.remove(selection);
+                for(Map.Entry<String, Integer> inventory:vendingStock.entrySet()){
+                    if(inventory.getKey().equals(selection)){
+                        inventory.setValue(inventory.getValue() - 1);
+                    }
+                }
+
+                if(vendingStock.get(selection)==0) {
+                    vendingCategories.put("*" + selection, vendingCategories.get(selection));
+                    vendingCategories.remove(selection);
+                }
 
             }
 
             else if (inputString.equals("3")) {
-                int quarters = (int)(totalMoney / .25);
-                totalMoney -= quarters * .25;
-
-                int dimes = (int)(totalMoney / .10);
-                totalMoney -= dimes * .10;
-
-                int nickles = (int)(totalMoney / .05);
-                totalMoney = 0.0;
-
-                System.out.println("Dispensing " + quarters + " Quarters");
-                System.out.println("Dispensing " + dimes + " Dimes");
-                System.out.println("Dispensing " + nickles + " Nickles");
-
+                returnMoney();
                 break;
             }
 
         }
+    }
+
+    public void returnMoney(){
+        final double quarter = .25;
+        final double dime = .1;
+        final double nickle = .05;
+
+        int quarters = (int)(totalMoney / quarter);
+        totalMoney -= quarters * quarter;
+
+        int dimes = (int)(totalMoney / dime);
+        totalMoney -= dimes * dime;
+
+        int nickles = (int)(totalMoney / nickle);
+        totalMoney = 0.0;
+
+        System.out.println("Dispensing " + quarters + " Quarters");
+        System.out.println("Dispensing " + dimes + " Dimes");
+        System.out.println("Dispensing " + nickles + " Nickles");
     }
 
 }

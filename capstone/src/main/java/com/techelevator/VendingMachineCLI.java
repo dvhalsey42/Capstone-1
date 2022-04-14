@@ -2,6 +2,7 @@ package com.techelevator;
 
 import com.techelevator.view.Menu;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +24,10 @@ public class VendingMachineCLI extends Import {
 
 	public void run() {
 		stockVendingMachine();
-
+		Map<String, Integer> vendingStock = new HashMap<>();
+		for(Map.Entry<String, List<String>> product:getVendingCategories().entrySet()){
+			vendingStock.put(product.getKey(), 5);
+		}
 
 		while (true) {
 			String choice = (String) menu.getChoiceFromOptions(MAIN_MENU_OPTIONS);
@@ -34,12 +38,13 @@ public class VendingMachineCLI extends Import {
 					if (item.getKey().contains("*")) {
 						System.out.println("SOLD OUT: " + item.getValue().get(0));
 					} else {
-						System.out.println(item.getKey() + ": " + item.getValue().get(0) + " " + item.getValue().get(1));
+						System.out.println(item.getKey() + ": " + item.getValue().get(0) +
+								" " + item.getValue().get(1));
 					}
 				}
 
 			} else if (choice.equals(MAIN_MENU_OPTION_PURCHASE)) {
-				purchase.purchaseMenu(getVendingCategories());
+				purchase.purchaseMenu(getVendingCategories(), vendingStock);
 			}
 			else if(choice.equals(MAIN_MENU_OPTION_EXIT)) {
 				log.logMessage("Exit Program");
