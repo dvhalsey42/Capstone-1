@@ -47,7 +47,7 @@ public class VendingMachineCLI extends Import {
 				purchase.purchaseMenu(getVendingCategories(), vendingStock);
 			}
 			else if(choice.equals(MAIN_MENU_OPTION_EXIT)) {
-				log.logMessage("Exit Program");
+				log.clearLog();
 				break;
 			}
 		}

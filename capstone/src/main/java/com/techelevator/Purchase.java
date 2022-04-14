@@ -1,11 +1,17 @@
 package com.techelevator;
 
+import org.w3c.dom.ls.LSOutput;
+
+import java.math.BigDecimal;
+import java.text.NumberFormat;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
 
 public class Purchase extends Import{
     private double totalMoney;
+    NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.US);
 
     private Log log = new Log();
 
@@ -19,12 +25,11 @@ public class Purchase extends Import{
 
     public void purchaseMenu(Map<String, List<String>> vendingCategories, Map<String, Integer> vendingStock) {
 
-
         while (true) {
             System.out.println("(1) Feed Money");
             System.out.println("(2) Select Product");
             System.out.println("(3) Finish Transaction");
-            System.out.println("\n" + "Current Money Provided: $" + getTotalMoney());
+            System.out.println("\n" + "Current Money Provided: " + currencyFormat.format(getTotalMoney()));
 
             Scanner input = new Scanner(System.in);
 
@@ -38,8 +43,7 @@ public class Purchase extends Import{
                 log.logMessage(inputString2 + " " + String.valueOf(totalMoney));
 
             } else if (inputString.equals("2")) {
-
-
+                boolean purchased = false;
 
                 for(Map.Entry<String, List<String>> item:vendingCategories.entrySet()){
                     if(item.getKey().contains("*")){
@@ -64,6 +68,7 @@ public class Purchase extends Import{
                         Chip buyChip = new Chip(totalMoney);
                         totalMoney = buyChip.buyProduct(product.getValue().get(0),
                                 Double.parseDouble(product.getValue().get(1)));
+                        purchased = true;
 
                     }
                     else if(selection.equals(product.getKey()) && selection.contains("B")) {
@@ -71,6 +76,8 @@ public class Purchase extends Import{
                         Candy buyCandy = new Candy(totalMoney);
                         totalMoney = buyCandy.buyProduct(product.getValue().get(0),
                                 Double.parseDouble(product.getValue().get(1)));
+                        purchased = true;
+
 
                     }
                     else if(selection.equals(product.getKey()) && selection.contains("C")) {
@@ -78,6 +85,8 @@ public class Purchase extends Import{
                         Drink buyDrink = new Drink(totalMoney);
                         totalMoney = buyDrink.buyProduct(product.getValue().get(0),
                                 Double.parseDouble(product.getValue().get(1)));
+                        purchased = true;
+
 
                     }
                     else if(selection.equals(product.getKey()) && selection.contains("D")) {
@@ -85,28 +94,34 @@ public class Purchase extends Import{
                         Gum buyGum = new Gum(totalMoney);
                         totalMoney = buyGum.buyProduct(product.getValue().get(0),
                                 Double.parseDouble(product.getValue().get(1)));
+                        purchased = true;
 
                     }
                 }
-
-                if(totalMoney == moneyBefore){
-
+                if(!purchased){
+                    System.out.println("Invalid Selection");
                     continue;
                 }
 
-                log.logMessage(vendingCategories.get(selection).get(0) + " " + selection + " " +
-                        String.valueOf(Double.parseDouble(vendingCategories.get(selection).get(1)) + totalMoney) +
-                        " " + String.valueOf(totalMoney));
-
-                for(Map.Entry<String, Integer> inventory:vendingStock.entrySet()){
-                    if(inventory.getKey().equals(selection)){
-                        inventory.setValue(inventory.getValue() - 1);
-                    }
+                if(totalMoney == moneyBefore && purchased){
+                    log.logMessage("Not enough money");
+                    continue;
                 }
+                if(purchased) {
+                    log.logMessage(vendingCategories.get(selection).get(0) + " " + selection + " " +
+                            String.valueOf(Double.parseDouble(vendingCategories.get(selection).get(1)) + totalMoney) +
+                            " " + String.valueOf(currencyFormat.format(totalMoney)));
 
-                if(vendingStock.get(selection)==0) {
-                    vendingCategories.put("*" + selection, vendingCategories.get(selection));
-                    vendingCategories.remove(selection);
+                    for (Map.Entry<String, Integer> inventory : vendingStock.entrySet()) {
+                        if (inventory.getKey().equals(selection)) {
+                            inventory.setValue(inventory.getValue() - 1);
+                        }
+                    }
+
+                    if (vendingStock.get(selection) == 0) {
+                        vendingCategories.put("*" + selection, vendingCategories.get(selection));
+                        vendingCategories.remove(selection);
+                    }
                 }
 
             }
@@ -115,22 +130,26 @@ public class Purchase extends Import{
                 returnMoney();
                 break;
             }
+            else{
+                System.out.println("Invalid Input");
+                continue;
+            }
 
         }
     }
 
     public void returnMoney(){
-        final double quarter = .25;
-        final double dime = .1;
-        final double nickle = .05;
+        final double QUARTER = .25;
+        final double DIME = .1;
+        final double NICKLE = .05;
 
-        int quarters = (int)(totalMoney / quarter);
-        totalMoney -= quarters * quarter;
+        int quarters = (int)(totalMoney / QUARTER);
+        totalMoney -= quarters * QUARTER;
 
-        int dimes = (int)(totalMoney / dime);
-        totalMoney -= dimes * dime;
+        int dimes = (int)(totalMoney / DIME);
+        totalMoney -= dimes * DIME;
 
-        int nickles = (int)(totalMoney / nickle);
+        int nickles = (int)(totalMoney / NICKLE);
         totalMoney = 0.0;
 
         System.out.println("Dispensing " + quarters + " Quarters");

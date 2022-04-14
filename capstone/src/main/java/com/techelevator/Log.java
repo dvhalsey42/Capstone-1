@@ -10,13 +10,15 @@ public class Log {
     private File logFile = new File(logFilePath);
 
     public void logMessage(String logMessage) {
-        try (PrintWriter writer = new PrintWriter(logFile)) {
+        try (PrintWriter writer = new PrintWriter(
+                new FileOutputStream(logFile, true)
+        )) {
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss");
             LocalDateTime now = LocalDateTime.now();
 
             System.out.println(now);
             System.out.println(logMessage);
-            writer.append(dtf.format(now) + " " + logMessage);
+            writer.write(dtf.format(now) + " " + logMessage + "\n");
 
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
