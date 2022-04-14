@@ -54,7 +54,11 @@ public class Purchase extends Import{
                 System.out.println("Please select your item");
 
                 String selection = input.nextLine();
+
+                double moneyBefore = totalMoney;
+
                 for (Map.Entry<String, List<String>> product : vendingCategories.entrySet()) {
+
                     if (selection.equals(product.getKey()) && selection.contains("A")) {
 
                         Chip buyChip = new Chip(totalMoney);
@@ -83,6 +87,11 @@ public class Purchase extends Import{
                                 Double.parseDouble(product.getValue().get(1)));
 
                     }
+                }
+
+                if(totalMoney == moneyBefore){
+
+                    continue;
                 }
 
                 log.logMessage(vendingCategories.get(selection).get(0) + " " + selection + " " +
