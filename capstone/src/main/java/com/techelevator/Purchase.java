@@ -1,8 +1,5 @@
 package com.techelevator;
 
-import org.w3c.dom.ls.LSOutput;
-
-import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
@@ -35,13 +32,29 @@ public class Purchase extends Import{
 
             String inputString = input.nextLine();
 
+            //Allows user to enter dollar bill value and adds amount to
+            //total available money in vending machine; logs input.
             if (inputString.equals("1")) {
                 System.out.println("Please enter dollar value of bill to feed into vending machine");
+
                 String inputString2 = input.nextLine();
+                try {
+                    double billValue = Double.valueOf(inputString2);
 
-                addMoney(Double.valueOf(inputString2));
-                log.logMessage(inputString2 + " " + String.valueOf(totalMoney));
-
+                    if (billValue == 1 || billValue == 2 || billValue == 5 || billValue == 10
+                            || billValue == 20 || billValue == 50 || billValue == 100) {
+                        addMoney(billValue);
+                        log.logMessage("Feed Money: " + currencyFormat.format(billValue) + " " +
+                                currencyFormat.format(totalMoney));
+                    } else {
+                        System.out.println("Please enter a valid dollar bill amount");
+                        continue;
+                    }
+                } catch (Exception e){
+                    System.out.println("Invalid Input");
+                }
+            //Allows user to select items, "dispenses" item to user and updates
+            //inventory of item; logs activity.
             } else if (inputString.equals("2")) {
                 boolean purchased = false;
 
@@ -109,8 +122,8 @@ public class Purchase extends Import{
                 }
                 if(purchased) {
                     log.logMessage(vendingCategories.get(selection).get(0) + " " + selection + " " +
-                            String.valueOf(Double.parseDouble(vendingCategories.get(selection).get(1)) + totalMoney) +
-                            " " + String.valueOf(currencyFormat.format(totalMoney)));
+                           currencyFormat.format(Double.parseDouble(vendingCategories.get(selection).get(1))) +
+                            " " + currencyFormat.format(totalMoney));
 
                     for (Map.Entry<String, Integer> inventory : vendingStock.entrySet()) {
                         if (inventory.getKey().equals(selection)) {
@@ -123,9 +136,9 @@ public class Purchase extends Import{
                         vendingCategories.remove(selection);
                     }
                 }
-
             }
 
+            //returns user to main menu and dispenses money.
             else if (inputString.equals("3")) {
                 returnMoney();
                 break;
@@ -137,11 +150,14 @@ public class Purchase extends Import{
 
         }
     }
-
+    //Divides remaining money into the largest change possible and
+    //displays results to user, sets totalMoney to 0
     public void returnMoney(){
         final double QUARTER = .25;
         final double DIME = .1;
         final double NICKLE = .05;
+
+        log.logMessage("Give Change: " + currencyFormat.format(totalMoney) + " $0.00");
 
         int quarters = (int)(totalMoney / QUARTER);
         totalMoney -= quarters * QUARTER;

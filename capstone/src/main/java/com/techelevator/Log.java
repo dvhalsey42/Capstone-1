@@ -9,6 +9,8 @@ public class Log {
 
     private File logFile = new File(logFilePath);
 
+    //Takes specific log message from each log event, adds date and time and
+    //prints it to the log file.
     public void logMessage(String logMessage) {
         try (PrintWriter writer = new PrintWriter(
                 new FileOutputStream(logFile, true)
@@ -16,8 +18,6 @@ public class Log {
             DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss");
             LocalDateTime now = LocalDateTime.now();
 
-            System.out.println(now);
-            System.out.println(logMessage);
             writer.write(dtf.format(now) + " " + logMessage + "\n");
 
         } catch (FileNotFoundException e) {
@@ -25,6 +25,7 @@ public class Log {
         }
     }
 
+    //Clears the log file
     public void clearLog(){
         try(PrintWriter writer = new PrintWriter(logFile)){
             writer.print("");

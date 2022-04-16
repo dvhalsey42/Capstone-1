@@ -22,6 +22,7 @@ public class VendingMachineCLI extends Import {
 		this.menu = menu;
 	}
 
+	//"Stocks" vending machine once at the start of the program
 	public void run() {
 		stockVendingMachine();
 		Map<String, Integer> vendingStock = new HashMap<>();
@@ -32,6 +33,7 @@ public class VendingMachineCLI extends Import {
 		while (true) {
 			String choice = (String) menu.getChoiceFromOptions(MAIN_MENU_OPTIONS);
 
+			//Displays vending machine items, and notes which items are sold out
 			if (choice.equals(MAIN_MENU_OPTION_DISPLAY_ITEMS)) {
 				Map<String, List<String>> vendingItems = getVendingCategories();
 				for(Map.Entry<String, List<String>> item:vendingItems.entrySet()) {
@@ -42,10 +44,11 @@ public class VendingMachineCLI extends Import {
 								" " + item.getValue().get(1));
 					}
 				}
-
+			//Moves user to the purchase menu
 			} else if (choice.equals(MAIN_MENU_OPTION_PURCHASE)) {
 				purchase.purchaseMenu(getVendingCategories(), vendingStock);
 			}
+			//deletes the contents of the log file and exits the program
 			else if(choice.equals(MAIN_MENU_OPTION_EXIT)) {
 				log.clearLog();
 				break;
