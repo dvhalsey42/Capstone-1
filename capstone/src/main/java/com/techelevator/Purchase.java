@@ -73,7 +73,7 @@ public class Purchase{
                 String selection = input.nextLine();
 
                 double moneyBefore = totalMoney;
-
+                try{
                 for (Map.Entry<String, List<String>> product : vendingCategories.entrySet()) {
 
                     if (selection.equals(product.getKey()) && selection.contains("A")) {
@@ -91,7 +91,6 @@ public class Purchase{
                                 Double.parseDouble(product.getValue().get(1)));
                         purchased = true;
 
-
                     }
                     else if(selection.equals(product.getKey()) && selection.contains("C")) {
 
@@ -100,7 +99,6 @@ public class Purchase{
                                 Double.parseDouble(product.getValue().get(1)));
                         purchased = true;
 
-
                     }
                     else if(selection.equals(product.getKey()) && selection.contains("D")) {
 
@@ -108,9 +106,13 @@ public class Purchase{
                         totalMoney = buyGum.buyProduct(product.getValue().get(0),
                                 Double.parseDouble(product.getValue().get(1)));
                         purchased = true;
+                    }
 
                     }
+                } catch(Exception e){
+                    System.out.println("Invalid Input");
                 }
+
                 if(!purchased){
                     System.out.println("Invalid Selection");
                     continue;
@@ -120,6 +122,7 @@ public class Purchase{
                     log.logMessage("Not enough money");
                     continue;
                 }
+
                 if(purchased) {
                     log.logMessage(vendingCategories.get(selection).get(0) + " " + selection + " " +
                            currencyFormat.format(Double.parseDouble(vendingCategories.get(selection).get(1))) +
