@@ -17,6 +17,8 @@ public class VendingMachineCLI extends Import {
 	private Menu menu;
 	private Purchase purchase = new Purchase();
 	private Log log = new Log();
+	private Map<String, Integer> vendingStock = new HashMap<>();
+
 
 	public VendingMachineCLI(Menu menu) {
 		this.menu = menu;
@@ -25,7 +27,6 @@ public class VendingMachineCLI extends Import {
 	//"Stocks" vending machine once at the start of the program
 	public void run() {
 		stockVendingMachine();
-		Map<String, Integer> vendingStock = new HashMap<>();
 		for(Map.Entry<String, List<String>> product:getVendingCategories().entrySet()){
 			vendingStock.put(product.getKey(), 5);
 		}

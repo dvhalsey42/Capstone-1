@@ -7,7 +7,7 @@ public class Gum extends Purchase implements Purchasable{
         this.totalMoneyInMachine = totalMoney2;
     }
     //checks to see if user has enough money to complete transaction,
-    //dispenses item if so.
+    //dispenses item if so. returns remaining money
     @Override
     public double buyProduct(String product, double price) {
         if(totalMoneyInMachine >= price){

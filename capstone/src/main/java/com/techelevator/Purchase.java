@@ -6,7 +6,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
 
-public class Purchase extends Import{
+public class Purchase{
     private double totalMoney;
     NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.US);
 
@@ -54,7 +54,7 @@ public class Purchase extends Import{
                     System.out.println("Invalid Input");
                 }
             //Allows user to select items, "dispenses" item to user and updates
-            //inventory of item; logs activity.
+            //inventory of item, marks sold out items as such; logs activity.
             } else if (inputString.equals("2")) {
                 boolean purchased = false;
 

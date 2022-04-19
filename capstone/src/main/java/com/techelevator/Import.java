@@ -19,10 +19,7 @@ public class Import {
         return vendingCategories;
     }
 
-    public void setVendingCategories(Map<String, List<String>> vendingCategories) {
-        this.vendingCategories = vendingCategories;
-    }
-
+    //Opens the vendingmachine.cvs file and stores the inventory in a Map
     public void stockVendingMachine() {
         try (Scanner fileInput = new Scanner(inputFile)) {
             while (fileInput.hasNextLine()) {
@@ -42,8 +39,5 @@ public class Import {
         } catch (FileNotFoundException e) {
             System.out.println("File not found" + e.getMessage());
         }
-
     }
-
-
 }

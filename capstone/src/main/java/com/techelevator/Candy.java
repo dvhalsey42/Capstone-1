@@ -8,7 +8,7 @@ public class Candy extends Purchase implements Purchasable{
     }
 
     //checks to see if user has enough money to complete transaction,
-    //dispenses item if so.
+    //dispenses item if so.  returns remaining money
     @Override
     public double buyProduct(String product, double price) {
         if(totalMoneyInMachine >= price){
