@@ -39,7 +39,7 @@ public class Purchase {
 
                 String inputString2 = input.nextLine();
                 try {
-                    double billValue = Double.valueOf(inputString2);
+                    double billValue = Double.parseDouble(inputString2);
 
                     if (billValue == 1 || billValue == 2 || billValue == 5 || billValue == 10
                             || billValue == 20 || billValue == 50 || billValue == 100) {
@@ -48,7 +48,6 @@ public class Purchase {
                                 currencyFormat.format(totalMoney));
                     } else {
                         System.out.println("Please enter a valid dollar bill amount");
-                        continue;
                     }
                 } catch (Exception e){
                     System.out.println("Invalid Input");
@@ -91,7 +90,6 @@ public class Purchase {
                                 Double.parseDouble(product.getValue().get(1)));
                         purchased = true;
 
-
                     }
                     else if(selection.equals(product.getKey()) && selection.contains("C")) {
 
@@ -99,8 +97,7 @@ public class Purchase {
                         totalMoney = buyDrink.buyProduct(product.getValue().get(0),
                                 Double.parseDouble(product.getValue().get(1)));
                         purchased = true;
-
-
+                        
                     }
                     else if(selection.equals(product.getKey()) && selection.contains("D")) {
 
