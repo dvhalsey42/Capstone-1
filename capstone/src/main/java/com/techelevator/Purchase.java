@@ -145,7 +145,6 @@ public class Purchase {
             }
             else{
                 System.out.println("Invalid Input");
-                continue;
             }
         }
     }
