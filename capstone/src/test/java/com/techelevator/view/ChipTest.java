@@ -7,7 +7,7 @@ import org.junit.Test;
 
 public class ChipTest {
     @Test
-    public void chip_test(){
+    public void chip_test_normal_purchase(){
         double money_in_machine = 50.0;
         Chip chip = new Chip(money_in_machine);
 
@@ -16,7 +16,7 @@ public class ChipTest {
         Assert.assertEquals(result, 44.01, 0.0);
     }
     @Test
-    public void chip_test_2(){
+    public void chip_test_no_money(){
         double money_in_machine_2 = 0;
 
         Chip chip_2 = new Chip(money_in_machine_2);

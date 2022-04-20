@@ -6,7 +6,7 @@ import org.junit.Test;
 
 public class GumTest {
     @Test
-    public void gum_test(){
+    public void gum_test_normal_purchase(){
         double money_in_machine = 50.0;
         Gum gum = new Gum(money_in_machine);
 
@@ -15,7 +15,7 @@ public class GumTest {
         Assert.assertEquals(result, 44.01, 0.0);
     }
     @Test
-    public void gum_test_2(){
+    public void gum_test_no_money(){
         double money_in_machine_2 = 0;
 
         Gum gum_2 = new Gum(money_in_machine_2);

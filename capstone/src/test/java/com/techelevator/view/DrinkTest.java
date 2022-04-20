@@ -6,7 +6,7 @@ import org.junit.Test;
 
 public class DrinkTest {
     @Test
-    public void drink_test(){
+    public void drink_test_normal_purchase(){
         double money_in_machine = 50.0;
         Drink drink = new Drink(money_in_machine);
 
@@ -15,7 +15,7 @@ public class DrinkTest {
         Assert.assertEquals(result, 44.01, 0.0);
     }
     @Test
-    public void drink_test_2(){
+    public void drink_test_no_money(){
         double money_in_machine_2 = 0;
 
         Drink drink_2 = new Drink(money_in_machine_2);

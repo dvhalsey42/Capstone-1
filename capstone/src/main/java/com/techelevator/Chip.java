@@ -15,7 +15,7 @@ public class Chip extends Purchase implements Purchasable{
             System.out.println("Money Remaining: " +
                     currencyFormat.format(totalMoneyInMachine - price));
             System.out.println("Crunch Crunch, Yum!");
-            return Math.round((totalMoneyInMachine-price)*100.0) /100.0;
+            return totalMoneyInMachine-price;
         }
         else{
             System.out.println("Not enough money");

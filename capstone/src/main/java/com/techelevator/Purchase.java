@@ -6,7 +6,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
 
-public class Purchase{
+public class Purchase extends Import{
     private double totalMoney;
     NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.US);
 
@@ -53,8 +53,8 @@ public class Purchase{
                 } catch (Exception e){
                     System.out.println("Invalid Input");
                 }
-            //Allows user to select items, "dispenses" item to user and updates
-            //inventory of item, marks sold out items as such; logs activity.
+                //Allows user to select items, "dispenses" item to user and updates
+                //inventory of item; logs activity.
             } else if (inputString.equals("2")) {
                 boolean purchased = false;
 
@@ -73,7 +73,7 @@ public class Purchase{
                 String selection = input.nextLine();
 
                 double moneyBefore = totalMoney;
-                try{
+
                 for (Map.Entry<String, List<String>> product : vendingCategories.entrySet()) {
 
                     if (selection.equals(product.getKey()) && selection.contains("A")) {
@@ -91,6 +91,7 @@ public class Purchase{
                                 Double.parseDouble(product.getValue().get(1)));
                         purchased = true;
 
+
                     }
                     else if(selection.equals(product.getKey()) && selection.contains("C")) {
 
@@ -99,6 +100,7 @@ public class Purchase{
                                 Double.parseDouble(product.getValue().get(1)));
                         purchased = true;
 
+
                     }
                     else if(selection.equals(product.getKey()) && selection.contains("D")) {
 
@@ -106,13 +108,9 @@ public class Purchase{
                         totalMoney = buyGum.buyProduct(product.getValue().get(0),
                                 Double.parseDouble(product.getValue().get(1)));
                         purchased = true;
-                    }
 
                     }
-                } catch(Exception e){
-                    System.out.println("Invalid Input");
                 }
-
                 if(!purchased){
                     System.out.println("Invalid Selection");
                     continue;
@@ -122,10 +120,9 @@ public class Purchase{
                     log.logMessage("Not enough money");
                     continue;
                 }
-
                 if(purchased) {
                     log.logMessage(vendingCategories.get(selection).get(0) + " " + selection + " " +
-                           currencyFormat.format(Double.parseDouble(vendingCategories.get(selection).get(1))) +
+                            currencyFormat.format(Double.parseDouble(vendingCategories.get(selection).get(1))) +
                             " " + currencyFormat.format(totalMoney));
 
                     for (Map.Entry<String, Integer> inventory : vendingStock.entrySet()) {
@@ -150,7 +147,6 @@ public class Purchase{
                 System.out.println("Invalid Input");
                 continue;
             }
-
         }
     }
     //Divides remaining money into the largest change possible and
@@ -172,8 +168,8 @@ public class Purchase{
         totalMoney = 0.0;
 
         System.out.println("Dispensing " + quarters + " Quarters");
-        System.out.println("Dispensing " + dimes + " Dimes");
-        System.out.println("Dispensing " + nickles + " Nickles");
+        System.out.println("Dispensing " + (dimes) + " Dimes");
+        System.out.println("Dispensing " + (nickles) + " Nickles");
     }
 
 }
