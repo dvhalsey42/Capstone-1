@@ -6,7 +6,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
 
-public class Purchase extends Import{
+public class Purchase {
     private double totalMoney;
     NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(Locale.US);
 
