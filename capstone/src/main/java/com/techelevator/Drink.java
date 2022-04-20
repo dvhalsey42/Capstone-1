@@ -16,7 +16,9 @@ public class Drink extends Purchase implements Purchasable{
             System.out.println("Money Remaining: " +
                     currencyFormat.format(totalMoneyInMachine - price));
             System.out.println("Glug, Glug, Yum!");
-            return totalMoneyInMachine-price;        }
+
+            return Math.round(totalMoneyInMachine * 100.) / 100.
+                    - Math.round(price * 100.) / 100.;        }
         else{
             System.out.println("Not enough money");
             return totalMoneyInMachine;

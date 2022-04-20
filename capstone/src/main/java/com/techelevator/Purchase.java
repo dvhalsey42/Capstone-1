@@ -158,13 +158,13 @@ public class Purchase extends Import{
 
         log.logMessage("Give Change: " + currencyFormat.format(totalMoney) + " $0.00");
 
-        int quarters = (int)(totalMoney / QUARTER);
+        int quarters = (int)((Math.round(totalMoney * 100.) / 100.) / QUARTER);
         totalMoney -= quarters * QUARTER;
 
-        int dimes = (int)(totalMoney / DIME);
+        int dimes = (int)((Math.round(totalMoney * 100.) / 100.) / DIME);
         totalMoney -= dimes * DIME;
 
-        int nickles = (int)(totalMoney / NICKLE);
+        int nickles= (int)((Math.round(totalMoney * 100.) / 100.) / NICKLE);
         totalMoney = 0.0;
 
         System.out.println("Dispensing " + quarters + " Quarters");
