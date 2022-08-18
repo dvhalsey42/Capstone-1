@@ -52,8 +52,7 @@ public class Purchase {
                 } catch (Exception e){
                     System.out.println("Invalid Input");
                 }
-                //Allows user to select items, "dispenses" item to user and updates
-                //inventory of item; logs activity.
+                //Displays the vending machine items and asks user to select item
             } else if (inputString.equals("2")) {
                 boolean purchased = false;
 
@@ -73,6 +72,9 @@ public class Purchase {
 
                 double moneyBefore = totalMoney;
 
+                //Takes user selection and checks if they have inserted enough money to purchase
+                //if so, dispenses item and category message and subtracts item price from
+                //total money
                 for (Map.Entry<String, List<String>> product : vendingCategories.entrySet()) {
 
                     if (selection.equals(product.getKey()) && selection.contains("A")) {
@@ -97,7 +99,7 @@ public class Purchase {
                         totalMoney = buyDrink.buyProduct(product.getValue().get(0),
                                 Double.parseDouble(product.getValue().get(1)));
                         purchased = true;
-                        
+
                     }
                     else if(selection.equals(product.getKey()) && selection.contains("D")) {
 
@@ -117,6 +119,9 @@ public class Purchase {
                     log.logMessage("Not enough money");
                     continue;
                 }
+
+                //logs purchase activity, updates inventory and if item is sold out
+                //marks it as such
                 if(purchased) {
                     log.logMessage(vendingCategories.get(selection).get(0) + " " + selection + " " +
                             currencyFormat.format(Double.parseDouble(vendingCategories.get(selection).get(1))) +
